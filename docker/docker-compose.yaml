@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  web:
+    volumes:
+      - ..:/app
+    build:
+      context: ..
+      args:
+        mix_env: dev
+    image: "liveopex:0.1.0.dev"
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - DATABASE_URL=postgresql://postgres:postgres@db/liveopex_dev
+    expose:
+      - "4000"
+  db:
+    image: "postgres"
+    restart: always
+    container_name: "liveopex-db"
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres13
+      - POSTGRES_DB=liveopex_dev
+    expose:
+      - "5432"
+
+volumes:
+  pgdata:
