@@ -48,7 +48,11 @@ defmodule Liveopex.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      # auth related dependencies
+      {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
+      {:ueberauth, "~> 0.7"},
+      {:ueberauth_google, "~> 0.10.1"}
     ]
   end
 
