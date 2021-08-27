@@ -18,6 +18,10 @@ docker-stop:
 	docker-compose -f ./docker/docker-compose.yaml down
 
 docker-run: compile
-	docker-compose -f ./docker/docker-compose.yaml up
+	docker-compose -f ./docker/docker-compose.yaml  up --build
 
+docker-db:
+	docker-compose -f ./docker/docker-compose.yaml up --build db
 
+docker-dbd:
+	docker-compose -f ./docker/docker-compose.yaml up -d db
