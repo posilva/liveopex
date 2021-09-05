@@ -15,10 +15,10 @@ compile: deps
 docker-restart: docker-stop docker-run
 
 docker-stop:
-	docker-compose -f ./docker/docker-compose.yaml down
+	docker-compose -f ./docker/docker-compose.yaml -f ./docker/docker-compose.observability.yaml down
 
 docker-run: compile
-	docker-compose -f ./docker/docker-compose.yaml  up --build
+	docker-compose -f ./docker/docker-compose.yaml -f ./docker/docker-compose.observability.yaml up --build
 
 docker-db:
 	docker-compose -f ./docker/docker-compose.yaml up --build db
