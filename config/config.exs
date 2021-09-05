@@ -6,6 +6,11 @@
 
 # General application configuration
 import Config
+# Configure Authentication
+config :ueberauth, Ueberauth,
+  providers: [
+    google: {Ueberauth.Strategy.Google, []}
+  ]
 
 config :liveopex,
   ecto_repos: [Liveopex.Repo]

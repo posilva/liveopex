@@ -5,7 +5,7 @@ config :liveopex, Liveopex.Repo,
   username: "postgres",
   password: "postgres13",
   database: "liveopex_dev",
-  hostname: "127.0.0.1",
+  hostname: "db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

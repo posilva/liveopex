@@ -6,12 +6,11 @@ services:
       - ..:/app
     build:
       context: ..
-      args:
-        mix_env: dev
     image: "liveopex:0.1.0.dev"
     ports:
       - "4000:4000"
     environment:
+      - MIX_ENV=docker
       - PORT=4000
       - DATABASE_URL=postgresql://postgres:postgres@db/liveopex_dev
     expose:
@@ -20,6 +19,8 @@ services:
     image: "postgres"
     restart: always
     container_name: "liveopex-db"
+    ports:
+      - "5432:5432"
     volumes:
       - 'pgdata:/var/lib/postgresql/data'
     environment:
@@ -29,6 +30,12 @@ services:
       - POSTGRES_DB=liveopex_dev
     expose:
       - "5432"
-
+  adminer:
+      image: adminer
+      restart: always
+      ports:
+        - "9080:8080"
+      expose:
+        - 9080
 volumes:
   pgdata:
