@@ -72,3 +72,5 @@ networks:
         internal: true
     prometheus-cadvisor:
         internal: true
+    prometheus-app:
+        internal: true
