@@ -16,6 +16,7 @@ defmodule Liveopex.Application do
       {Phoenix.PubSub, name: Liveopex.PubSub},
       # Start the Endpoint (http/https)
       LiveopexWeb.Endpoint
+
       # Start a worker by calling: Liveopex.Worker.start_link(arg)
       # {Liveopex.Worker, arg}
     ]

@@ -1,0 +1,17 @@
+global:
+  scrape_interval:     10s
+  evaluation_interval: 10s
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+
+rule_files:
+
+scrape_configs:
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+      - targets: ['web:9568']
+      - targets: ['loki:3100']

@@ -1,0 +1,87 @@
+version: "3"
+
+services:
+    loki:
+        image: grafana/loki:2.3.0
+        command: -config.file=/etc/loki/local-config.yaml
+        ports:
+        - "3100:3100"
+        networks:
+            - grafana-loki
+            - promtail-loki
+            - world
+        volumes:
+            - ./loki/loki-config.yml:/etc/loki/loki-config.yml
+            - loki-data-index:/loki-index
+            - loki-data-chunks:/loki-chunks
+    promtail:
+        depends_on:
+            - loki
+        image: grafana/promtail:2.3.0
+        volumes:
+            - ./promtail/config.yml:/etc/promtail/config.yml
+            - /var/lib/docker/containers:/var/lib/docker/containers
+            - /var/log:/var/log
+        command: -config.file=/etc/promtail/config.yml
+        networks:
+            - promtail-loki
+
+    cadvisor:
+        image: google/cadvisor:v0.33.0
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:ro
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+            - /dev/disk/:/dev/disk:ro
+        networks:
+            - prometheus-cadvisor
+
+    prometheus:
+        image: prom/prometheus:v2.29.2
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus:/app.cfg
+        networks:
+            - world
+            - prometheus-cadvisor
+            - grafana-prometheus
+        command: >-
+            --config.file=/app.cfg/prometheus.yml
+            --storage.tsdb.path=/prometheus
+            --web.console.libraries=/usr/share/prometheus/console_libraries
+            --web.console.templates=/usr/share/prometheus/consoles
+
+    grafana:
+        depends_on:
+            - loki
+        image: grafana/grafana:8.0.0
+        ports:
+            - "3000:3000"
+        environment:
+            GF_SECURITY_ADMIN_USER: admin
+            GF_SECURITY_ADMIN_PASSWORD: test
+        volumes:
+            - ./grafana:/app.cfg
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
+        networks:
+            - world
+            - grafana-loki
+            - grafana-prometheus
+
+networks:
+    world:
+    promtail-loki:
+        internal: true
+    grafana-loki:
+        internal: true
+    grafana-prometheus:
+        internal: true
+    prometheus-cadvisor:
+        internal: true
+    prometheus-app:
+        internal: true
+volumes:
+  loki-data-index: {}
+  loki-data-chunks: {}

@@ -15,6 +15,10 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db/liveopex_dev
     expose:
       - "4000"
+    networks:
+      - prometheus-app
+      - database-app
+      - world
   db:
     image: "postgres"
     restart: always
@@ -30,12 +34,21 @@ services:
       - POSTGRES_DB=liveopex_dev
     expose:
       - "5432"
+    networks:
+      - database-app
+      - world
   adminer:
-      image: adminer
-      restart: always
-      ports:
-        - "9080:8080"
-      expose:
-        - 9080
+    image: adminer
+    restart: always
+    ports:
+      - "9080:8080"
+    expose:
+      - 9080
+    networks:
+      - database-app
+      - world
 volumes:
   pgdata:
+networks:
+  database-app:
+    internal: true

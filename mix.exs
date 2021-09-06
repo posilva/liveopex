@@ -33,6 +33,7 @@ defmodule Liveopex.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:telemetry, "~> 0.4", override: true},
       {:bcrypt_elixir, "~> 2.0"},
       {:phoenix, github: "phoenixframework/phoenix", override: true},
       {:phoenix_ecto, "~> 4.4"},
@@ -53,7 +54,9 @@ defmodule Liveopex.MixProject do
       # auth related dependencies
       {:phx_gen_auth, "~> 0.7", only: [:dev, :docker], runtime: false},
       {:ueberauth, "~> 0.7"},
-      {:ueberauth_google, "~> 0.10.1"}
+      {:ueberauth_google, "~> 0.10.1"},
+      # telemetry reporters
+      {:telemetry_metrics_prometheus, "~> 1.1", override: true}
     ]
   end
 

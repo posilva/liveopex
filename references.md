@@ -9,3 +9,12 @@
 - https://www.youtube.com/watch?v=3AAj5eO_WuQ
 
 Do not forget to whilelist url redirects in "https://console.cloud.google.com/apis/credentials" to allow for authentication
+
+
+# Observability
+
+- https://medium.com/@raphael.megzari/instrumenting-phoenix-with-prometheus-61dee2d5e166
+- https://elixirschool.com/blog/instrumenting-phoenix-with-telemetry-part-one/
+- https://blog.56k.cloud/provisioning-grafana-datasources-and-dashboards-automagically/
+## Loki
+- https://akoutmos.com/post/elixir-logging-loki/
