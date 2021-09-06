@@ -3,7 +3,7 @@ version: "3"
 services:
     loki:
         image: grafana/loki:2.3.0
-        command: -config.file=/etc/loki/local-config.yaml
+        command: -log.level=error -config.file=/etc/loki/local-config.yaml
         ports:
         - "3100:3100"
         networks:
@@ -22,7 +22,7 @@ services:
             - ./promtail/config.yml:/etc/promtail/config.yml
             - /var/lib/docker/containers:/var/lib/docker/containers
             - /var/log:/var/log
-        command: -config.file=/etc/promtail/config.yml
+        command: -log.level=error -config.file=/etc/promtail/config.yml
         networks:
             - promtail-loki
 
