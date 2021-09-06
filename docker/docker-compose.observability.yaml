@@ -4,17 +4,25 @@ services:
     loki:
         image: grafana/loki:2.3.0
         command: -config.file=/etc/loki/local-config.yaml
+        ports:
+        - "3100:3100"
         networks:
             - grafana-loki
             - promtail-loki
-
+            - world
+        volumes:
+            - ./loki/loki-config.yml:/etc/loki/loki-config.yml
+            - loki-data-index:/loki-index
+            - loki-data-chunks:/loki-chunks
     promtail:
         depends_on:
             - loki
-        image: grafana/promtail:master
+        image: grafana/promtail:2.3.0
         volumes:
+            - ./promtail/config.yml:/etc/promtail/config.yml
+            - /var/lib/docker/containers:/var/lib/docker/containers
             - /var/log:/var/log
-        command: -config.file=/etc/promtail/docker-config.yaml
+        command: -config.file=/etc/promtail/config.yml
         networks:
             - promtail-loki
 
@@ -54,9 +62,9 @@ services:
         environment:
             GF_SECURITY_ADMIN_USER: admin
             GF_SECURITY_ADMIN_PASSWORD: test
-            GF_PATHS_PROVISIONING: '/app.cfg/provisioning'
         volumes:
             - ./grafana:/app.cfg
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
         networks:
             - world
             - grafana-loki
@@ -74,3 +82,6 @@ networks:
         internal: true
     prometheus-app:
         internal: true
+volumes:
+  loki-data-index: {}
+  loki-data-chunks: {}

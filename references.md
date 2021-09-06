@@ -15,3 +15,6 @@ Do not forget to whilelist url redirects in "https://console.cloud.google.com/ap
 
 - https://medium.com/@raphael.megzari/instrumenting-phoenix-with-prometheus-61dee2d5e166
 - https://elixirschool.com/blog/instrumenting-phoenix-with-telemetry-part-one/
+- https://blog.56k.cloud/provisioning-grafana-datasources-and-dashboards-automagically/
+## Loki
+- https://akoutmos.com/post/elixir-logging-loki/

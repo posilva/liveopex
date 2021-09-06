@@ -14,3 +14,4 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
       - targets: ['web:9568']
+      - targets: ['loki:3100']
